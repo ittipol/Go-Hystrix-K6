@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+
+  hystrix-dashboard:
+    image: mlabouardy/hystrix-dashboard
+    container_name: hystrix-dashboard
+    ports:
+      - 9002:9002
+
+  k6:
+    image: loadimpact/k6
+    container_name: k6
+    volumes:
+      - ./k6:/scripts
+
+  client:
+    build: ./client
+    container_name: client
+    ports:
+      - 8080:8080
+      - 8081:8081
+
+  server:
+    build: ./server
+    container_name: server
+    ports:
+      - 5000:5000
